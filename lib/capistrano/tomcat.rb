@@ -42,10 +42,12 @@ configuration.load do
     def run_tomcat_command cmd
       log = File.join(shared_path, "log", "deploy.log")
       tmpdir = File.join(current_path, "temp")
+      pidfile = File.join(shared_path, "pids", "tomcat6.pid")
       base_env = {
         "CATALINA_HOME" => catalina_home,
         "CATALINA_BASE" => current_path,
-        "CATALINA_TMPDIR" => tmpdir
+        "CATALINA_TMPDIR" => tmpdir,
+        "CATALINA_PID" => pidfile
       }
       run "#{catalina_executable} #{cmd} #{log}", :env => base_env.merge(tomcat_runtime_env)
     end
